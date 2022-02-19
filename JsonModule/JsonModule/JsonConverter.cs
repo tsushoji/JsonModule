@@ -9,6 +9,11 @@ namespace JsonModule
     public class JsonConverter<T>
     {
         /// <summary>
+        /// バイナリーフォーマッター
+        /// </summary>
+        private static BinaryFormatter BinaryFormatter = new BinaryFormatter();
+
+        /// <summary>
         /// Jsonシリアライザー設定
         /// </summary>
         private static readonly DataContractJsonSerializerSettings Settings = new DataContractJsonSerializerSettings
@@ -28,12 +33,11 @@ namespace JsonModule
         /// <returns>Json</returns>
         public static string ConvertToJson(byte[] data)
         {
-            using (var streamBinary = new MemoryStream(data)) 
+            try
             {
-                try
+                using (var streamBinary = new MemoryStream(data))
                 {
-                    var formatter = new BinaryFormatter();
-                    T obj = (T)formatter.Deserialize(streamBinary);
+                    T obj = (T)BinaryFormatter.Deserialize(streamBinary);
 
                     using (var streamJson = new MemoryStream())
                     {
@@ -46,10 +50,10 @@ namespace JsonModule
                         }
                     }
                 }
-                catch (Exception) 
-                {
-                    return null;
-                }
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
 
@@ -60,24 +64,23 @@ namespace JsonModule
         /// <returns>バイナリーデータ</returns>
         public static byte[] ConvertToByte(string json)
         {
-            using (var streamObj = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+            try
             {
-                try
+                using (var streamObj = new MemoryStream(Encoding.UTF8.GetBytes(json)))
                 {
                     T obj = (T)Serializer.ReadObject(streamObj);
 
                     using (var streamBinary = new MemoryStream())
                     {
-                        var formatter = new BinaryFormatter();
-                        formatter.Serialize(streamBinary, obj);
+                        BinaryFormatter.Serialize(streamBinary, obj);
 
                         return streamBinary.ToArray();
                     }
                 }
-                catch (Exception) 
-                {
-                    return null;
-                }
+            }
+            catch (Exception) 
+            {
+                return null;
             }
         }
     }
