@@ -7,11 +7,13 @@ namespace JsonModule.entity
     [DataContract(Namespace = "JsonModule.entity")]
     public class SunTime
     {
-        [DataMember]
+        [DataMember(Order = 0)]
         public string Date { get; set; }
-        [DataMember]
+
+        [DataMember(Order = 1)]
         public int OnTime { get; set; }
-        [DataMember]
+
+        [DataMember(Order = 2)]
         public int OverTime { get; set; }
     }
 }

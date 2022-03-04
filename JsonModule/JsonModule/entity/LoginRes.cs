@@ -5,12 +5,18 @@ namespace JsonModule.entity
 {
     [Serializable()]
     [DataContract(Namespace = "JsonModule.entity")]
-    public class AttendanceManagerBase
+    public class LoginRes : AttendanceManagerBase
     {
+        public LoginRes()
+        {
+            CmdId = 101;
+            CmdName = 101;
+        }
+
         [DataMember(Order = 0)]
-        protected int CmdId { get; set; }
+        public int Status { get; set; }
 
         [DataMember(Order = 1)]
-        protected int CmdName { get; set; }
+        public int Authority { get; set; }
     }
 }

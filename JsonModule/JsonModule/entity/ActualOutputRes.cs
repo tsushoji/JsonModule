@@ -8,15 +8,16 @@ namespace JsonModule.entity
     [DataContract(Namespace = "JsonModule.entity")]
     public class ActualOutputRes : AttendanceManagerBase
     {
-        public ActualOutputRes () 
+        public ActualOutputRes()
         {
             CmdId = 401;
             CmdName = 401;
         }
 
-        [DataMember]
+        [DataMember(Order = 0)]
         public int Status { get; set; }
-        [DataMember]
+
+        [DataMember(Order = 1)]
         public List<SunTime> TimeList { get; set; } = new List<SunTime>();
     }
 }
