@@ -14,6 +14,15 @@ namespace JsonModuleUnitTest
         [TestMethod]
         public void CreateJsonFile()
         {
+            var exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var dicInfo = Directory.GetParent(exePath);
+            var dicParent = dicInfo.FullName;
+            var testJsonFileFolderPath = dicParent + "\\TestJsonFile";
+            if (!(Directory.Exists(testJsonFileFolderPath)))
+            {
+                Directory.CreateDirectory(testJsonFileFolderPath);
+            }
+
             DataContractJsonSerializerSettings settings = new DataContractJsonSerializerSettings
             {
                 UseSimpleDictionaryFormat = true
